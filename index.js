@@ -106,43 +106,34 @@ function iniciarSesion(user, pass, callback, callbackError) {
   const url =
     "https://servicios.cordoba.gov.ar/WSSigo_Bridge/BridgeUsuario.asmx/IniciarSesion";
 
-  fetch(url, {
+  const data = {
+    user: user,
+    pass: pass
+  };
+
+  var settings = {
+    async: true,
+    crossDomain: true,
+    url: url,
     method: "POST",
-    mode: "cors",
     headers: {
-      "Access-Control-Allow-Origin": "*",
-      Accept: "application/json",
-      "Content-Type": "application/json"
+      "content-type": "application/json",
+      "cache-control": "no-cache",
+      "postman-token": "5e021da7-6863-6b71-e5ce-4d27ff8fdbfa"
     },
-    body: JSON.stringify({
-      user: user,
-      pass: pass
-    })
-  })
-    .then(response => response.json())
-    .then(responseJson => {
-      var data = responseJson.d;
+    data: JSON.stringify(data)
+  };
 
-      if (!data.Ok) {
-        callbackError(data.Error);
-        return;
-      }
-
-      callback(data.Return);
-    })
-    .catch(error => {
-      callbackError("Error porcesando la solicitud");
-    });
+  $.ajax(settings).done(function(response) {
+    console.log(response);
+  });
 }
 
-var solicitudDatos;
 function buscarDatosMarcador(lat, lng, callback, callbackError) {
   const url =
     "https://servicios.cordoba.gov.ar/WSSigo_Bridge/BridgeDomicilio.asmx/ValidarDomicilio";
 
-  if (solicitudDatos != undefined) {
-  }
-  solicitudDatos = fetch(url, {
+  fetch(url, {
     method: "POST",
     headers: {
       Accept: "application/json",
