@@ -117,6 +117,7 @@ function iniciarSesion(user, pass, callback, callbackError) {
     url: url,
     method: "POST",
     headers: {
+      "Access-Control-Allow-Origin": "https://fedeamura.github.io",
       "content-type": "application/json",
       "cache-control": "no-cache",
       "postman-token": "5e021da7-6863-6b71-e5ce-4d27ff8fdbfa"
