@@ -115,10 +115,15 @@ function iniciarSesion(user, pass, callback, callbackError) {
     Url: url,
     Data: data,
     OnSuccess: function(result) {
-      console.log(result);
+      if (!result.Ok) {
+        callbackError(result.Error);
+        return;
+      }
+
+      return callback(result.Return);
     },
     OnError: function(result) {
-      console.log(result);
+      callbackError("Error procesando la solicitud");
     }
   });
 }
@@ -127,39 +132,34 @@ function buscarDatosMarcador(lat, lng, callback, callbackError) {
   const url =
     "https://servicios.cordoba.gov.ar/WSSigo_Bridge/BridgeDomicilio.asmx/ValidarDomicilio";
 
-  fetch(url, {
-    method: "POST",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      token: token,
-      domicilio: {
-        porBarrio: true,
-        XGoogle: lat,
-        YGoogle: lng
-      }
-    })
-  })
-    .then(response => response.json())
-    .then(responseJson => {
-      var data = responseJson.d;
+  const data = {
+    token: token,
+    domicilio: {
+      porBarrio: true,
+      XGoogle: lat,
+      YGoogle: lng
+    }
+  };
 
-      if (!data.Ok) {
-        callbackError(data.Error);
+  crearAjax({
+    Url: url,
+    Data: data,
+    OnSuccess: function(result) {
+      if (!result.Ok) {
+        callbackError(result.Error);
         return;
       }
 
-      callback(data.Return);
-    })
-    .catch(error => {
+      callback(result.Return);
+    },
+    OnError: function(result) {
       callbackError("Error porcesando la solicitud");
-    });
+    }
+  });
 }
 
 function crearAjax(valores) {
-  $.postCORS({
+  $.ajax({
     url: valores.Url,
     data: JSON.stringify(valores.Data),
     dataType: "json",
@@ -174,21 +174,3 @@ function crearAjax(valores) {
     }
   });
 }
-
-jQuery.postCORS = function(url, data, func) {
-  if (func == undefined) func = function() {};
-  return $.ajax({
-    type: "POST",
-    url: url,
-    data: data,
-    dataType: "json",
-    contentType: "application/x-www-form-urlencoded",
-    xhrFields: { withCredentials: true },
-    success: function(res) {
-      func(res);
-    },
-    error: function() {
-      func({});
-    }
-  });
-};
