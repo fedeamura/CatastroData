@@ -108,7 +108,9 @@ function iniciarSesion(user, pass, callback, callbackError) {
 
   fetch(url, {
     method: "POST",
+    mode: "cors",
     headers: {
+      "Access-Control-Allow-Origin": "*",
       Accept: "application/json",
       "Content-Type": "application/json"
     },
