@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>Ejemplo CPC</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+  <link rel="stylesheet" href="./index.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+</head>
+
+<body>
+  <div id="contenedor_Contenido" class="blur">
+    <div id="mapa">
+
+    </div>
+
+    <div id="hint" class="card">
+      <i class="material-icons">help_outline</i>
+      <label>Haga click en cualquier posición para conocer el Barrio y Cpc</label>
+    </div>
+
+  </div>
+
+  <div id="contenedor_Login" class="visible">
+    <div class="fondo"></div>
+    <div class="card">
+      <input type="text" id="input_Usuario" placeholder="Usuario" autofocus />
+      <input type="password" id="input_Password" placeholder="Contraseña" />
+      <a id="btn_Login" class="btn waves-effect">Acceder</a>
+    </div>
+  </div>
+
+
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+  <script src="./index.js"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCrx7fsnW-aDmoUOvVrsf88WihSe9Vza2g&callback=initMap" async defer></script>
+
+</body>
+
+
+
+</html>

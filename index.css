@@ -1,0 +1,97 @@
+body,
+html {
+  width: 100%;
+  height: 100%;
+}
+
+#contenedor_Login {
+  position: absolute;
+  pointer-events: none;
+  left: 0;
+  top: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+#contenedor_Login.visible {
+  pointer-events: all;
+}
+
+#contenedor_Login > .fondo {
+  background-color: rgba(0, 0, 0, 0.3);
+  position: absolute;
+  left: 0;
+  top: 1;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.5s;
+}
+
+#contenedor_Login.visible > .fondo {
+  opacity: 1;
+  pointer-events: all;
+}
+
+#contenedor_Login > .card {
+  opacity: 0;
+  transform: scale(0.7);
+  pointer-events: none;
+  transition: all 0.5s;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  min-width: 30rem;
+  justify-content: center;
+  align-items: center;
+}
+
+#contenedor_Login > .card a.btn {
+  max-width: 15rem;
+}
+
+#contenedor_Login.visible > .card {
+  opacity: 1;
+  pointer-events: all;
+  transform: scale(1);
+}
+
+#contenedor_Contenido {
+  width: 100%;
+  height: 100%;
+  transition: all 0.5s;
+}
+
+#contenedor_Contenido.blur {
+  filter: blur(6px);
+}
+#mapa {
+  width: 100%;
+  height: 100%;
+}
+
+#hint {
+  position: absolute;
+  bottom: 3rem;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+  max-width: 30rem;
+  padding: 0.5rem;
+  display: flex;
+}
+
+#hint > i {
+  font-size: 2rem;
+}
+#hint > label {
+  color: black;
+  font-size: 1.2rem;
+  font-weight: 300;
+  margin-left: 0.5rem;
+}
