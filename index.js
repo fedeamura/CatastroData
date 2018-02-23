@@ -111,22 +111,15 @@ function iniciarSesion(user, pass, callback, callbackError) {
     pass: pass
   };
 
-  var settings = {
-    async: true,
-    crossDomain: true,
-    url: url,
-    method: "POST",
-    headers: {
-      "Access-Control-Allow-Origin": "https://fedeamura.github.io",
-      "content-type": "application/json",
-      "cache-control": "no-cache",
-      "postman-token": "5e021da7-6863-6b71-e5ce-4d27ff8fdbfa"
+  crearAjax({
+    Url: url,
+    Data: data,
+    OnSuccess: function(result) {
+      console.log(result);
     },
-    data: JSON.stringify(data)
-  };
-
-  $.ajax(settings).done(function(response) {
-    console.log(response);
+    OnError: function(result) {
+      console.log(result);
+    }
   });
 }
 
@@ -164,3 +157,38 @@ function buscarDatosMarcador(lat, lng, callback, callbackError) {
       callbackError("Error porcesando la solicitud");
     });
 }
+
+function crearAjax(valores) {
+  $.postCORS({
+    url: valores.Url,
+    data: JSON.stringify(valores.Data),
+    dataType: "json",
+    contentType: "application/json; charset=utf-8",
+    type: "POST",
+    success: function(result) {
+      result = result.d;
+      valores.OnSuccess(result);
+    },
+    error: function(result) {
+      valores.OnError(result);
+    }
+  });
+}
+
+jQuery.postCORS = function(url, data, func) {
+  if (func == undefined) func = function() {};
+  return $.ajax({
+    type: "POST",
+    url: url,
+    data: data,
+    dataType: "json",
+    contentType: "application/x-www-form-urlencoded",
+    xhrFields: { withCredentials: true },
+    success: function(res) {
+      func(res);
+    },
+    error: function() {
+      func({});
+    }
+  });
+};
